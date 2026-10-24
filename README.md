@@ -14,7 +14,9 @@ Welcome to the hands-on code laboratory for **Build & Test an Agentic AI Code Re
   *Explore the full 4-stage pipeline, test replays, and dual-path AST inspector directly in your browser. Zero installation, zero API key required.*
 * 🎨 **Official 14-Slide Presentation:** [Figma Slides Deck](https://www.figma.com/deck/xMdgxofHiE8DCMawULJI89?node-id=0-249)  
   *Follow the visual architecture and presenter cues for the session.*
-* 📦 **Download Starter ZIP:** [gemini-pr-agent-starter.zip](materials/gemini-pr-agent-starter.zip) (or via the event Google Drive folder)  
+* 💻 **GitHub Repository:** [github.com/SakshamKapoor2911/gemini-pr-agent](https://github.com/SakshamKapoor2911/gemini-pr-agent)  
+  *Clone or fork the code: `git clone https://github.com/SakshamKapoor2911/gemini-pr-agent.git`*
+* 📦 **Download Starter ZIP:** [Download main.zip](https://github.com/SakshamKapoor2911/gemini-pr-agent/archive/refs/heads/main.zip) (or `gemini-pr-agent-starter.zip` via Google Drive)  
   *For attendees preferring a single-click archive download over git clone.*
 
 ![Interactive Browser Walkthrough Preview](assets/walkthrough-preview.png)
