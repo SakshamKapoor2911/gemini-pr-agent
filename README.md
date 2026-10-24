@@ -1,6 +1,13 @@
-# Build & Test an Agentic AI Code Reviewer
-**BigTh!nkAI × GDSC UMD · Hacktoberfest 2026**  
-*Follow one pull request all the way from model suspicion to deterministic tool evidence and sandbox test receipts.*
+<p align="center">
+  <img src="assets/workshop-banner.svg" alt="Build & Test an Agentic AI Code Reviewer Banner — BigTh!nkAI × GDSC UMD" width="100%" />
+</p>
+
+<p align="center">
+  <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google_Gemini-8E75C2?style=flat-square&logo=googlegemini&logoColor=white" alt="Google Gemini" /></a>
+  <a href="https://genkit.dev/"><img src="https://img.shields.io/badge/Firebase_Genkit-FFCA28?style=flat-square&logo=firebase&logoColor=black" alt="Firebase Genkit" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://nodejs.org/en/about/previous-releases"><img src="https://img.shields.io/badge/Node.js_22-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js 22" /></a>
+</p>
 
 ---
 

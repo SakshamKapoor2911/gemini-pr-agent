@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="100%" height="220" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d141c" />
+      <stop offset="50%" stop-color="#0a0f15" />
+      <stop offset="100%" stop-color="#06090d" />
+    </linearGradient>
+
+    <!-- Top Accent Line Gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0" />
+      <stop offset="20%" stop-color="#10b981" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#06b6d4" stop-opacity="1" />
+      <stop offset="80%" stop-color="#3b82f6" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Node Glow Effects -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="2" y="2" width="1196" height="216" rx="12" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" />
+  <rect x="200" y="2" width="800" height="2" fill="url(#accentGrad)" />
+
+  <!-- LEFT COLUMN: Workshop Branding -->
+  <!-- Tagline -->
+  <circle cx="48" cy="46" r="3.5" fill="#10b981" filter="url(#glow)" />
+  <text x="60" y="49" fill="#10b981" font-size="11" font-weight="700" letter-spacing="1.5">BIGTH!NKAI × GDSC UMD</text>
+  <circle cx="218" cy="46" r="1.5" fill="#475569" />
+  <text x="228" y="49" fill="#64748b" font-size="11" font-weight="600" letter-spacing="1.2">HACKTOBERFEST 2026</text>
+
+  <!-- Workshop Title -->
+  <text x="48" y="90" fill="#f8fafc" font-size="25" font-weight="800" letter-spacing="-0.4">Build &amp; Test an Agentic AI Code Reviewer</text>
+
+  <!-- Subtitle -->
+  <text x="48" y="122" fill="#94a3b8" font-size="13.5" font-weight="400">
+    <tspan fill="#38bdf8" font-weight="600">Model Suspicion</tspan> → 
+    <tspan fill="#2dd4bf" font-weight="600">Deterministic Tools</tspan> → 
+    <tspan fill="#fbbf24" font-weight="600">Sandbox Verification</tspan> → 
+    <tspan fill="#4ade80" font-weight="600">Delivered PR Review</tspan>
+  </text>
+
+  <!-- Interactive walkthrough notice -->
+  <rect x="48" y="148" width="450" height="38" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="62" y="172" fill="#cbd5e1" font-size="11.5" font-weight="500">
+    Companion Web App: <tspan fill="#38bdf8" font-weight="600">review-lab-umd.vercel.app</tspan> (Zero-Install Walkthrough)
+  </text>
+
+  <!-- RIGHT COLUMN: 4-Stage Review Pipeline Visual -->
+  <g id="pipeline" transform="translate(540, 36)">
+    <!-- Pipeline Box Background -->
+    <rect x="0" y="0" width="612" height="152" rx="10" fill="#0b0f15" fill-opacity="0.6" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="24" fill="#64748b" font-size="10.5" font-weight="700" letter-spacing="1.2">4-STAGE AGENTIC REVIEW PIPELINE</text>
+
+    <!-- Node 0: PR Diff -->
+    <g transform="translate(20, 42)">
+      <rect width="84" height="48" rx="6" fill="#1e293b" fill-opacity="0.8" stroke="#334155" stroke-width="1" />
+      <text x="42" y="24" fill="#f1f5f9" font-size="11.5" font-weight="700" text-anchor="middle">PR Diff</text>
+      <text x="42" y="38" fill="#94a3b8" font-size="8.5" font-weight="500" text-anchor="middle">Untrusted</text>
+    </g>
+
+    <!-- Connector 1 -->
+    <path d="M 108 66 L 126 66" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)" />
+    <polygon points="126,63 132,66 126,69" fill="#64748b" />
+
+    <!-- Node 1: Review -->
+    <g transform="translate(136, 42)">
+      <rect width="90" height="48" rx="6" fill="#0f766e" fill-opacity="0.25" stroke="#14b8a6" stroke-width="1" />
+      <text x="45" y="24" fill="#2dd4bf" font-size="11.5" font-weight="700" text-anchor="middle">1. Review</text>
+      <text x="45" y="38" fill="#5eead4" font-size="8.5" font-weight="500" text-anchor="middle">Initial Plan</text>
+    </g>
+
+    <!-- Connector 2 -->
+    <polygon points="230,63 236,66 230,69" fill="#64748b" />
+    <path d="M 226 66 L 230 66" stroke="#475569" stroke-width="1.5" />
+
+    <!-- Node 2: Investigate -->
+    <g transform="translate(240, 42)">
+      <rect width="102" height="48" rx="6" fill="#0369a1" fill-opacity="0.25" stroke="#38bdf8" stroke-width="1" />
+      <text x="51" y="24" fill="#38bdf8" font-size="11.5" font-weight="700" text-anchor="middle">2. Investigate</text>
+      <text x="51" y="38" fill="#7dd3fc" font-size="8.5" font-weight="500" text-anchor="middle">AST Scanner</text>
+    </g>
+
+    <!-- Connector 3 -->
+    <polygon points="346,63 352,66 346,69" fill="#64748b" />
+    <path d="M 342 66 L 346 66" stroke="#475569" stroke-width="1.5" />
+
+    <!-- Node 3: Verify -->
+    <g transform="translate(356, 42)">
+      <rect width="94" height="48" rx="6" fill="#b45309" fill-opacity="0.25" stroke="#f59e0b" stroke-width="1" />
+      <text x="47" y="24" fill="#fbbf24" font-size="11.5" font-weight="700" text-anchor="middle">3. Verify</text>
+      <text x="47" y="38" fill="#fde68a" font-size="8.5" font-weight="500" text-anchor="middle">Sandbox Test</text>
+    </g>
+
+    <!-- Connector 4 -->
+    <polygon points="454,63 460,66 454,69" fill="#64748b" />
+    <path d="M 450 66 L 454 66" stroke="#475569" stroke-width="1.5" />
+
+    <!-- Node 4: Deliver -->
+    <g transform="translate(464, 42)">
+      <rect width="92" height="48" rx="6" fill="#15803d" fill-opacity="0.25" stroke="#22c55e" stroke-width="1" />
+      <text x="46" y="24" fill="#4ade80" font-size="11.5" font-weight="700" text-anchor="middle">4. Deliver</text>
+      <text x="46" y="38" fill="#86efac" font-size="8.5" font-weight="500" text-anchor="middle">Line Anchors</text>
+    </g>
+
+    <!-- Self-Repair Feedback Loop (Arc from Verify back to Review) -->
+    <path d="M 403 94 C 403 128, 181 128, 181 96" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3" />
+    <polygon points="178,98 181,92 184,98" fill="#f59e0b" />
+    <rect x="220" y="118" width="144" height="20" rx="10" fill="#1c1917" stroke="#b45309" stroke-width="0.8" />
+    <text x="292" y="132" fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle">↺ Feedback Loop on Test Fail</text>
+  </g>
+</svg>
