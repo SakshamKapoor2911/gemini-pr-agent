@@ -1,0 +1,39 @@
+{
+  "name": "agentic-pr-maintainer",
+  "version": "1.0.0",
+  "description": "Workshop: Build and Test a Tool-Using AI Code Reviewer with Gemini and Genkit",
+  "main": "dist/agent.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --env-file-if-exists=.env dist/agent.js",
+    "test:local": "node --env-file-if-exists=.env -r ts-node/register src/agent.ts",
+    "test": "npm run build && node --test dist/checker.test.js dist/sandbox-verifier.test.js",
+    "test:repair": "npm run build && node --test dist/repair.test.js",
+    "demo:offline": "npm run build && node dist/demo.js",
+    "demo:replay": "npm run build && node dist/demo.js --replay",
+    "dev:ui": "genkit start -- ts-node src/dev-server.ts"
+  },
+  "keywords": [
+    "gemini",
+    "genkit",
+    "agent",
+    "github-action",
+    "hacktoberfest"
+  ],
+  "author": "BigTh!nkAI x GDSC UMD",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@genkit-ai/google-genai": "1.42.0",
+    "genkit": "1.42.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "genkit-cli": "^1.42.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}

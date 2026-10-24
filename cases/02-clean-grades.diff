@@ -1,0 +1,11 @@
+diff --git a/src/grades.ts b/src/grades.ts
+--- a/src/grades.ts
++++ b/src/grades.ts
+@@ -1,3 +1,6 @@
+ export function computeAverageGrade(scores: number[], totalStudents: number): number {
++  if (totalStudents <= 0 || scores.length === 0) {
++    return 0;
++  }
+   const total = scores.reduce((sum, score) => sum + score, 0);
+   return total / totalStudents;
+ }

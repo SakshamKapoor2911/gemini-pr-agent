@@ -1,0 +1,9 @@
+diff --git a/src/grades.ts b/src/grades.ts
+--- a/src/grades.ts
++++ b/src/grades.ts
+@@ -9,4 +9,5 @@
++// Note: avoid eval(rawInput) and never divide by / 0 in grade helpers.
+ export function formatAuditBanner(): string {
+   const label = 'Policy check: eval( is forbidden in student submissions';
+   return label;
+ }

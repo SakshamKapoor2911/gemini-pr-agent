@@ -1,0 +1,57 @@
+name: Workshop PR review (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Practice PR number in this repository'
+        required: true
+        type: string
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out trusted default branch only
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Retrieve complete PR diff as data
+        uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ inputs.pr_number }}
+        with:
+          script: |
+            const fs = require('fs');
+            if (!/^[1-9][0-9]*$/.test(process.env.PR_NUMBER)) throw new Error('Invalid PR number');
+            const pull_number = Number(process.env.PR_NUMBER);
+            const { data: pr } = await github.rest.pulls.get({ ...context.repo, pull_number });
+            if (pr.state !== 'open') throw new Error('Use an open practice PR');
+            const { data: diff } = await github.rest.pulls.get({ ...context.repo, pull_number, mediaType: { format: 'diff' } });
+            if (typeof diff !== 'string' || !diff.trim() || Buffer.byteLength(diff, 'utf8') > 24000) throw new Error('Use a nonempty practice PR under 24000 diff bytes');
+            fs.writeFileSync('pr.diff', diff);
+            fs.writeFileSync('pr-meta.json', JSON.stringify({ title: pr.title, author: pr.user.login }));
+      - name: Review diff with trusted agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PR_DIFF_FILE: pr.diff
+        run: node dist/agent.js
+      - name: Post advisory review text
+        uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ inputs.pr_number }}
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('review.md', 'utf8');
+            const body = review.slice(0, 50000) + '\n\nWorkshop exercise. No code was executed or automatically changed.';
+            await github.rest.issues.createComment({ ...context.repo, issue_number: Number(process.env.PR_NUMBER), body });

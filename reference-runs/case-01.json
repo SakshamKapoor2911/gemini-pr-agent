@@ -1,0 +1,120 @@
+{
+  "caseId": "case-01",
+  "scenario": "Buggy grades: 0 / 0 introduced, totalStudents unguarded",
+  "model": "gemini-flash-lite-latest",
+  "prTitle": "Fix(grades): handle empty scores array with fallback",
+  "prAuthor": "contributor-dev",
+  "durationMs": 34095,
+  "capturedAt": "2026-10-24T05:38:02.414Z",
+  "review": {
+    "verdict": "REQUEST_CHANGES",
+    "executiveSummary": "The PR attempts to handle empty scores arrays by returning `0 / 0` (NaN), which is dangerous and causes division-by-zero or NaN issues. Furthermore, totalStudents can be zero or negative. A safe fallback returning 0 and validating totalStudents is required.",
+    "detailedFeedback": "Returning `0 / 0` produces `NaN`, which can corrupt downstream calculations. In addition, `totalStudents` being zero or negative leads to division by zero or negative divisor edge cases. We verified a robust patch handling empty scores and non-positive `totalStudents` safely.",
+    "findings": [
+      {
+        "severity": "BLOCKING",
+        "message": "Returning `0 / 0` results in NaN and represents literal division-by-zero/indeterminate arithmetic.",
+        "filePath": "src/grades.ts",
+        "lineNumber": 2
+      },
+      {
+        "severity": "BLOCKING",
+        "message": "Literal division/modulo by zero."
+      }
+    ],
+    "suggestedPatches": [
+      "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0 || totalStudents <= 0) {\n    return 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}"
+    ],
+    "patches": [
+      {
+        "filePath": "src/grades.ts",
+        "startLine": 1,
+        "endLine": 6,
+        "explanation": "Replace NaN return with safe 0 fallback and check for non-positive totalStudents.",
+        "suggestedCode": "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0 || totalStudents <= 0) {\n    return 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}",
+        "verifiedBadge": "Passed 4 workshop tests"
+      }
+    ],
+    "verificationBadge": "Passed 4 workshop tests"
+  },
+  "toolCalls": [
+    {
+      "timestamp": "2026-10-24T05:37:37.927Z",
+      "tool": "readRepoContext",
+      "input": {
+        "filePath": "src/grades.ts"
+      },
+      "output": {
+        "filePath": "src/grades.ts",
+        "content": "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0) {\n    return 0 / 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}\n\nexport function formatAuditBanner(): string {\n  const label = 'Policy check: eval( is forbidden in student submissions';\n  return label;\n}\n",
+        "status": "SUCCESS"
+      }
+    },
+    {
+      "timestamp": "2026-10-24T05:37:49.179Z",
+      "tool": "staticSecurityAndLintChecker",
+      "input": {
+        "language": "typescript",
+        "codeSnippet": "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0) {\n    return 0 / 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}\n"
+      },
+      "output": {
+        "hasErrors": true,
+        "detectedIssues": [
+          "Literal division/modulo by zero."
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-10-24T05:37:53.608Z",
+      "tool": "verifyProposedPatch",
+      "input": {
+        "filePath": "src/grades.ts",
+        "proposedCode": "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0 || totalStudents === 0) {\n    return 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}\n\nexport function formatAuditBanner(): string {\n  const label = 'Policy check: eval( is forbidden in student submissions';\n  return label;\n}"
+      },
+      "output": {
+        "runId": "43c9bcc6-58b1-4e1b-9f96-653414b3bd6c",
+        "receipt": {
+          "runId": "43c9bcc6-58b1-4e1b-9f96-653414b3bd6c",
+          "candidateHash": "d0f9731329ee5cb8e2e444f23fbd346e4169e6cf33eb047c959352067b557ed4",
+          "suiteHash": "84c15aa3548b85fe838334e426b498aafd72037e48d6e51bd6d55db2613200a0",
+          "completed": true,
+          "exitCode": 1,
+          "passed": 3,
+          "failed": 1,
+          "skipped": 0,
+          "rawOutput": "TAP version 13\n# Subtest: returns 0 when scores array is empty\nok 1 - returns 0 when scores array is empty\n  ---\n  duration_ms: 1.3963\n  type: 'test'\n  ...\n# Subtest: returns 0 when totalStudents is zero\nok 2 - returns 0 when totalStudents is zero\n  ---\n  duration_ms: 0.243\n  type: 'test'\n  ...\n# Subtest: returns 0 when totalStudents is negative\nnot ok 3 - returns 0 when totalStudents is negative\n  ---\n  duration_ms: 6.6431\n  type: 'test'\n  location: 'C:\\\\Users\\\\SAKSHA~1\\\\AppData\\\\Local\\\\Temp\\\\gemini-pr-sandbox-SwOf6Z\\\\src\\\\repair.test.ts:15:22'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    -85 !== 0\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 0\n  actual: -85\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (C:\\Users\\SAKSHA~1\\AppData\\Local\\Temp\\gemini-pr-sandbox-SwOf6Z\\src\\repair.test.ts:14:10)\n    Test.runInAsyncScope (node:async_hooks:214:14)\n    Test.run (node:internal/test_runner/test:1047:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:744:18)\n    Test.postRun (node:internal/test_runner/test:1173:19)\n    Test.run (node:internal/test_runner/test:1101:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: calculates correct average for positive scores and student count\nok 4 - calculates correct average for positive scores and student count\n  ---\n  duration_ms: 0.2334\n  type: 'test'\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 3\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 1890.5373\n"
+        },
+        "verifiedBadge": "FAILED (1 failing tests)",
+        "passed": 3,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-24T05:37:57.930Z",
+      "tool": "verifyProposedPatch",
+      "input": {
+        "filePath": "src/grades.ts",
+        "proposedCode": "export function computeAverageGrade(scores: number[], totalStudents: number): number {\n  if (scores.length === 0 || totalStudents <= 0) {\n    return 0;\n  }\n  const total = scores.reduce((sum, score) => sum + score, 0);\n  return total / totalStudents;\n}\n\nexport function formatAuditBanner(): string {\n  const label = 'Policy check: eval( is forbidden in student submissions';\n  return label;\n}"
+      },
+      "output": {
+        "runId": "541c9363-5d31-4acd-a51f-601ded1cdb52",
+        "receipt": {
+          "runId": "541c9363-5d31-4acd-a51f-601ded1cdb52",
+          "candidateHash": "fd02c675fbdef4ac5bf04cc184ce3c291c711f0b0386b7c9897f55592f9975a2",
+          "suiteHash": "84c15aa3548b85fe838334e426b498aafd72037e48d6e51bd6d55db2613200a0",
+          "completed": true,
+          "exitCode": 0,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "rawOutput": "TAP version 13\n# Subtest: returns 0 when scores array is empty\nok 1 - returns 0 when scores array is empty\n  ---\n  duration_ms: 1.7094\n  type: 'test'\n  ...\n# Subtest: returns 0 when totalStudents is zero\nok 2 - returns 0 when totalStudents is zero\n  ---\n  duration_ms: 0.2739\n  type: 'test'\n  ...\n# Subtest: returns 0 when totalStudents is negative\nok 3 - returns 0 when totalStudents is negative\n  ---\n  duration_ms: 0.1889\n  type: 'test'\n  ...\n# Subtest: calculates correct average for positive scores and student count\nok 4 - calculates correct average for positive scores and student count\n  ---\n  duration_ms: 0.2807\n  type: 'test'\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2143.364\n"
+        },
+        "verifiedBadge": "Passed 4 workshop tests",
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  ]
+}

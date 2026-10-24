@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+review.md
+tool-trace.jsonl
+pr.diff
